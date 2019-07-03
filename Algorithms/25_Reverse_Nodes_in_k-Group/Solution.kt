@@ -1,4 +1,4 @@
-mport java.util.*
+import java.util.*
 
 /**
  * Example:
@@ -11,32 +11,32 @@ mport java.util.*
  */
 class Solution {
     fun reverseKGroup(head: ListNode?, k: Int): ListNode? {
-	return if (k == 1) {
-	    head
-	} else {
-	    val stack: Stack<ListNode> = Stack()
-	    var newHead = head
-	    while (newHead != null) {
-	        stack.push(newHead)
-		newHead = newHead.next
-	    }
+        return if (k == 1) {
+            head
+        } else {
+            val stack: Stack<ListNode> = Stack()
+            var newHead = head
+            while (newHead != null) {
+                stack.push(newHead)
+                newHead = newHead.next
+            }
 
-	    for (i in 1..stack.size % k) {
-		newHead = stack.pop()
-	    }
+            for (i in 1..stack.size % k) {
+                newHead = stack.pop()
+            }
 
-	    while (stack.isNotEmpty()) {
-		val front = stack.pop()
-	        var tmpHead = front
-	        for (i in 1 until k) {
-		    tmpHead.next = stack.pop()
-		    tmpHead = tmpHead.next
-		}
-		tmpHead.next = newHead
-		newHead = front
-	    }
+            while (stack.isNotEmpty()) {
+                val front = stack.pop()
+                var tmpHead = front
+                for (i in 1 until k) {
+                    tmpHead.next = stack.pop()
+                    tmpHead = tmpHead.next
+                }
+                tmpHead.next = newHead
+                newHead = front
+            }
 
-	    newHead
-	}
+            newHead
+        }
     }
 }
