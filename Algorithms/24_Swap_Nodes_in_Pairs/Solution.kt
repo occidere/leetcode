@@ -30,6 +30,6 @@ class Solution {
             h = n1
         }
 
-	return h
+        return h
     }
 }
