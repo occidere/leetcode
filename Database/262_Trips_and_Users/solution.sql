@@ -1,5 +1,5 @@
 -- OracleSQL
-WITH oct AS (  
+WITH oct AS (
     SELECT request_at, status
     FROM trips
     WHERE 
@@ -10,20 +10,18 @@ WITH oct AS (
 SELECT
     total.request_at day,
     ROUND(COALESCE(cancel.cnt / total.cnt, 0.0f), 2) "Cancellation Rate"
-FROM
-    (
-        SELECT request_at, COUNT(1) cnt
-        FROM oct
-        GROUP BY request_at
-    ) total 
-    FULL OUTER JOIN
-    (
+FROM (
+     SELECT request_at, COUNT(1) cnt
+     FROM oct
+     GROUP BY request_at
+) total 
+    FULL OUTER JOIN (
         SELECT request_at, COUNT(1) cnt
         FROM oct
         WHERE status != 'completed'
         GROUP BY request_at
     ) cancel
-ON total.request_at = cancel.request_at
+    ON total.request_at = cancel.request_at
 ORDER BY total.request_at
 ;
 
