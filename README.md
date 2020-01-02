@@ -1,4 +1,4 @@
-# leetcode
+# LeetCode
 
 ## What is this
 - This repository is consisted of LeetCode solutions I solved.
