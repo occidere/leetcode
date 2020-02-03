@@ -1,5 +1,7 @@
 # LeetCode
 
+[![HitCount](http://hits.dwyl.io/occidere/leetcode.svg)](http://hits.dwyl.io/occidere/leetcode)
+
 ## What is this
 - This repository is consisted of LeetCode solutions I solved.
 
