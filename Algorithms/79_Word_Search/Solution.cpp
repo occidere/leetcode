@@ -43,7 +43,7 @@ private:
 
         for (int i = 0; !find && i < 4; i++) {
             int ax = x + dx[i], ay = y + dy[i];
-            if (!find && in_range(ax, ay) && !visit[ax][ay]) {
+            if (in_range(ax, ay) && !visit[ax][ay]) {
                 visit[ax][ay] = true;
                 dfs(board, ax, ay, s + board[ax][ay], word);
                 visit[ax][ay] = false;
