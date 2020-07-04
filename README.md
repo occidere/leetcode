@@ -4,10 +4,10 @@
 <img src="https://img.shields.io/github/issues/occidere/leetcode"/> <img src="https://img.shields.io/github/last-commit/occidere/leetcode"/> <img src="https://img.shields.io/github/commit-activity/w/occidere/leetcode"/>
 
 
-## What is this
+## What is this?
 - This repository is consisted of LeetCode solutions I solved.
 
-## What is the purpose
+## What is the purpose?
 - For improve logical, computational thingking in the process of finding out the suitable solutions.
 
 ## Category
