@@ -5,7 +5,7 @@
 
 <br>
 
-![Langauges Statistics](https://raw.githubusercontent.com/occidere/leetcode/feature/add-language-statistics/.statistics/language_statistics.png)
+![Langauges Statistics](https://raw.githubusercontent.com/occidere/leetcode/master/.statistics/language_statistics.png)
 
 <br>
 
