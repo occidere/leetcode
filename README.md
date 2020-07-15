@@ -3,6 +3,11 @@
 [![HitCount](http://hits.dwyl.io/occidere/leetcode.svg)](http://hits.dwyl.io/occidere/leetcode) <img src="https://img.shields.io/github/languages/count/occidere/leetcode"/> <img src="https://img.shields.io/github/languages/top/occidere/leetcode"/>
 <img src="https://img.shields.io/github/issues/occidere/leetcode"/> <img src="https://img.shields.io/github/last-commit/occidere/leetcode"/> <img src="https://img.shields.io/github/commit-activity/w/occidere/leetcode"/>
 
+<br>
+
+![Langauges Statistics](https://raw.githubusercontent.com/occidere/leetcode/feature/add-language-statistics/.statistics/language_statistics.png)
+
+<br>
 
 ## What is this?
 - This repository is consisted of LeetCode solutions I solved.
