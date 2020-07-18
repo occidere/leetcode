@@ -31,4 +31,3 @@ jobs:
       run: |
         cd .statistics
         python language_statistics.py --token "${TOKEN}"
-
