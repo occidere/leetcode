@@ -8,7 +8,7 @@ on:
       - '**.png'
       - '**.jpg'
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 9 * * *'
 
 jobs:
   build:
