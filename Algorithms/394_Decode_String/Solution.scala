@@ -1,3 +1,5 @@
+import Utils._
+
 import scala.collection.mutable
 import scala.util.matching.Regex
 
@@ -9,12 +11,10 @@ object Utils {
     def popStr: String = (buf.result(), buf.clear())._1
     def splitNumberAndChars: Iterable[String] = Iterable(charRegex.findAllIn(buf).mkString(""), numRegex.findAllIn(buf.popStr).mkString(""))
   }
-
 }
 
 object Solution {
   def decodeString(s: String): String = {
-    import Utils._
     val buf = new StringBuilder()
     val stk = mutable.Stack[String]()
     for (c <- s) c match {
