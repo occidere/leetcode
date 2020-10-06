@@ -12,7 +12,7 @@
 # @return {TreeNode}
 def insert_into_bst(root, val)
   if not root
-    nil
+    root = TreeNode.new(val)
   elsif val < root.val
     root.left ? insert_into_bst(root.left, val) : root.left = TreeNode.new(val)
   else
