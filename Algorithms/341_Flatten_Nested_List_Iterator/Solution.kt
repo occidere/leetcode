@@ -37,25 +37,21 @@ class NestedIterator(nestedList: List<NestedInteger>) {
     fun next(): Int = niList[idx++].getInteger()!!.apply { hasNext() }
 
     fun hasNext(): Boolean {
-        while (true) {
-            when {
-                idx < niList.size -> {
-                    when {
-                        niList[idx].isInteger() -> return true
-                        niList[idx].getList()!!.isEmpty() -> ++idx
-                        else -> {
-                            stk.push(Pair(niList, idx + 1))
-                            niList = niList[idx].getList()!!
-                            idx = 0
-                        }
-                    }
+        while (true) when {
+            idx < niList.size -> when {
+                niList[idx].isInteger() -> return true
+                niList[idx].getList()!!.isEmpty() -> ++idx
+                else -> {
+                    stk.push(Pair(niList, idx + 1))
+                    niList = niList[idx].getList()!!
+                    idx = 0
                 }
-                stk.isNotEmpty() -> stk.pop().apply {
-                    niList = this.first
-                    idx = this.second
-                }
-                else -> return false
             }
+            stk.isNotEmpty() -> stk.pop().apply {
+                niList = this.first
+                idx = this.second
+            }
+            else -> return false
         }
     }
 }
