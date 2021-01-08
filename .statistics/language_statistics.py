@@ -109,10 +109,10 @@ if __name__ == '__main__':
         log('[Language usage aggregation finished]')
         [log(f'{x}') for x in language_count]
 
-        # chart_filename = create_pie_chart_image(language_count)
-        # log('Chart image saved')
-        #
-        # uploaded_url = upload_pie_chart(chart_filename, args.token)
-        # log('Chart image uploaded')
+        chart_filename = create_pie_chart_image(language_count)
+        log('Chart image saved')
+
+        uploaded_url = upload_pie_chart(chart_filename, args.token)
+        log('Chart image uploaded')
     else:
         parser.print_usage()
