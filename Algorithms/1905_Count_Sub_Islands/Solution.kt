@@ -1,14 +1,15 @@
 class Solution {
-    fun countSubIslands(grid1: Array<IntArray>, grid2: Array<IntArray>): Int {
-        grid1.overlapTo(grid2)
-        return grid2.getSubIslandCount()
-    }
+    private val d = intArrayOf(-1, 1, 0, 0) to intArrayOf(0, 0, -1, 1)
 
-    private fun Array<IntArray>.overlapTo(grid: Array<IntArray>) {
+    fun countSubIslands(grid1: Array<IntArray>, grid2: Array<IntArray>) = grid2
+        .beOverlappedWith(grid1)
+        .getSubIslandCount()
+
+    private fun Array<IntArray>.beOverlappedWith(grid: Array<IntArray>) = apply {
         for (i in indices) {
             for (j in this[0].indices) {
                 if (this[i][j] == 1 && grid[i][j] == 1) {
-                    ++grid[i][j]
+                    ++this[i][j]
                 }
             }
         }
@@ -16,9 +17,8 @@ class Solution {
 
     private fun Array<IntArray>.getSubIslandCount(): Int {
         var cnt = 0
-
         for (i in indices) {
-            for (j in this.indices) {
+            for (j in this[0].indices) {
                 if (this[i][j] == 2) {
                     if (Pair(i, j).isSubIslandPartOf(this)) {
                         ++cnt
@@ -26,7 +26,6 @@ class Solution {
                 }
             }
         }
-
         return cnt
     }
 
@@ -34,7 +33,6 @@ class Solution {
         grid[first][second] = 0
 
         var isSubIsland = true
-        val d = intArrayOf(-1, 1, 0, 0) to intArrayOf(0, 0, -1, 1)
         val q = mutableListOf(this)
         while (q.isNotEmpty()) {
             val cur = q.removeAt(0)
@@ -52,7 +50,6 @@ class Solution {
                 }
             }
         }
-
         return isSubIsland
     }
 
