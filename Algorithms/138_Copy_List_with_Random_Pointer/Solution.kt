@@ -13,38 +13,39 @@ class Solution {
     fun copyRandomList(node: Node?): Node? = if (node == null) null else {
         var n = 0
         var head = node
-        val nodes = arrayListOf<Node>()
         val nodeIdx = mutableMapOf<Node, Int>()
-
+        val nodes = Array<Node?>(1000) { null }
         while (head != null) {
-            nodes.add(head)
-            nodeIdx[head] = n++
+            nodeIdx[head] = n
+            nodes[n++] = head
             head = head.next
         }
 
         val copied = Array<Node?>(n) { null }
-        fun Node.tryCopyNode(): Boolean {
-            val curIdx = nodeIdx.getValue(this)
-            return if (copied[curIdx] != null) false else {
-                copied[curIdx] = Node(this.`val`)
+        fun copyNode(curNode: Node): Boolean {
+            val curIdx = nodeIdx.getValue(curNode)
+            return if (copied[curIdx] == null) {
+                copied[curIdx] = Node(curNode.`val`)
                 true
-            }
+            } else false
         }
 
-        fun Node.followRandom() {
-            val randomNode = this.random
-            if (randomNode != null && randomNode.tryCopyNode()) {
-                randomNode.followRandom()
+        fun followRandom(curNode: Node) {
+            val randomNode = curNode.random
+            if (randomNode != null) {
+                if (copyNode(randomNode)) {
+                    followRandom(randomNode)
+                }
             }
-        }
-
-        for (originNode in nodes) {
-            originNode.tryCopyNode()
-            originNode.followRandom()
         }
 
         for (i in 0 until n) {
-            copied[i]!!.random = copied[nodeIdx.getValue(nodes[i])]
+            copyNode(nodes[i]!!)
+            followRandom(nodes[i]!!)
+        }
+
+        for (i in 0 until n) {
+            copied[i]!!.random = if (nodes[i]?.random == null) null else copied[nodeIdx.getValue(nodes[i]!!.random!!)]
             if (i < n - 1) {
                 copied[i]!!.next = copied[i + 1]
             }
