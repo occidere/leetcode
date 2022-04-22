@@ -46,10 +46,10 @@ send_line_notification() {
   ranking_changed=false
   msg=''
 
-  if [[ $prev_ranking > $curr_ranking ]]; then
+  if ((prev_ranking > curr_ranking)); then
     ranking_changed=true
     msg="Rank up ($prev_ranking -> $curr_ranking)"
-  elif [[ $prev_ranking < $curr_ranking ]]; then
+  elif ((prev_ranking < curr_ranking)); then
     ranking_changed=true
     msg="Rank down ($prev_ranking -> $curr_ranking)"
   else
@@ -57,7 +57,7 @@ send_line_notification() {
   fi
 
   echo "${msg}"
-  if [[ $ranking_changed -eq true ]]; then
+  if [ $ranking_changed == 'true' ]; then
     resp=$(
       curl -sS -L -XPOST 'https://api.line.me/v2/bot/message/push' \
         -H 'Content-Type: application/json' \
