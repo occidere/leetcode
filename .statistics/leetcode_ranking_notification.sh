@@ -45,13 +45,11 @@ send_line_notification() {
   curr_ranking=${2}
   ranking_changed=false
   msg=''
-  
-  echo "prev: ${prev_ranking}, curr: ${curr_ranking}"
 
-  if ((prev_ranking > curr_ranking)); then
+  if (($prev_ranking > $curr_ranking)); then
     ranking_changed=true
     msg="Rank up ($prev_ranking -> $curr_ranking)"
-  elif ((prev_ranking < curr_ranking)); then
+  elif (($prev_ranking < $curr_ranking)); then
     ranking_changed=true
     msg="Rank down ($prev_ranking -> $curr_ranking)"
   else
@@ -59,7 +57,7 @@ send_line_notification() {
   fi
 
   echo "${msg}"
-  if ((ranking_changed == 'true')); then
+  if (($ranking_changed == 'true')); then
     resp=$(curl -sS -L -XPOST 'https://api.line.me/v2/bot/message/push' \
       -H 'Content-Type: application/json' \
       -H "Authorization: Bearer ${LEETCODE_RANKING_LINE_CHANNEL_ACCESS_TOKEN}" \
@@ -97,3 +95,4 @@ main() {
 }
 
 main "$@"
+
