@@ -73,6 +73,9 @@ send_line_notification() {
       }'
     )
     echo "Line sent response: $(echo "${resp}" | jq -cr .)"
+    
+    update_ranking_to_github "${curr_ranking}"
+    echo "Ranking has been updated to github (${curr_ranking})"
   fi
 }
 
