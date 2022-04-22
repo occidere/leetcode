@@ -21,4 +21,5 @@ jobs:
       shell: bash
       run: |
         cd .statistics
+        chmod 777 leetcode_ranking_notification.sh
         ./leetcode_ranking_notification.sh "${GITHUB_API_TOKEN}" "${LINE_CHANNEL_ACCESS_TOKEN}" "${LINE_BOT_ID}" "${USER_ID}"
