@@ -45,6 +45,8 @@ send_line_notification() {
   curr_ranking=${2}
   ranking_changed=false
   msg=''
+  
+  echo "prev: ${prev_ranking}, curr: ${curr_ranking}"
 
   if ((prev_ranking > curr_ranking)); then
     ranking_changed=true
@@ -71,7 +73,7 @@ send_line_notification() {
         ]
       }'
     )
-    echo "Line sent response = $(echo "${resp}" | jq -cr .)"
+    echo "Line sent response: $(echo "${resp}" | jq -cr .)"
   fi
 }
 
@@ -95,4 +97,3 @@ main() {
 }
 
 main "$@"
-
