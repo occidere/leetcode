@@ -18,6 +18,7 @@ jobs:
         LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LEETCODE_RANKING_LINE_CHANNEL_ACCESS_TOKEN }}
         LINE_BOT_ID: ${{ secrets.LEETCODE_RANKING_LINE_BOT_ID }}
         USER_ID: occidere
+      shell: bash
       run: |
         cd .statistics
-        sh leetcode_ranking_notification.sh "${GITHUB_API_TOKEN}" "${LINE_CHANNEL_ACCESS_TOKEN}" "${LINE_BOT_ID}" "${USER_ID}"
+        ./leetcode_ranking_notification.sh "${GITHUB_API_TOKEN}" "${LINE_CHANNEL_ACCESS_TOKEN}" "${LINE_BOT_ID}" "${USER_ID}"
