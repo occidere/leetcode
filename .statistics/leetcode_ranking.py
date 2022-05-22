@@ -68,7 +68,7 @@ def upload_rankings_csv(sorted_rankings: List[Ranking], gh_token: str) -> str:
 
 
 def generate_line_graph(rankings: List[Ranking]) -> str:
-	last_10_rankings: List[Ranking] = sorted(rankings, key=lambda r: r.epoch_ms)[-11:-1]
+	last_10_rankings: List[Ranking] = sorted(rankings, key=lambda r: r.epoch_ms)[-10:]
 	for r in last_10_rankings:
 		log(f'{r}')
 	xs = list(map(lambda r: _epoch_ms_to_date_str(r.epoch_ms, '%m/%d'), last_10_rankings))
