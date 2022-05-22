@@ -75,14 +75,15 @@ def generate_line_graph(rankings: List[Ranking]) -> str:
 	from matplotlib import pyplot as plt
 	from matplotlib.pyplot import figure
 
-	for i in range(len(xs)):
-		plt.text(xs[i], ys[i] + 0.3, ys[i], ha='center', va='bottom', size=10)
 	figure(figsize=(9, 5))
 	plt.gca().invert_yaxis()
 	plt.plot(xs, ys, '.-')
 	plt.title('LeetCode Ranking')
 	plt.xlabel('Date')
 	plt.ylabel('Ranking')
+	for i in range(len(xs)):
+		plt.text(xs[i], ys[i] + 0.3, ys[i], ha='center', va='bottom', size=10)
+
 	name = 'ranking_graph.png'
 	plt.savefig(name, transparent=True)
 	return name
