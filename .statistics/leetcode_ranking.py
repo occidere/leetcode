@@ -183,14 +183,14 @@ if __name__ == '__main__':
 
 			# 3. Update rankings csv to GitHub
 			latest_rankings: List[Ranking] = rankings_from_github + [ranking_from_leetcode]
-			# upload_rankings_csv(latest_rankings, args.gh_token)
+			upload_rankings_csv(latest_rankings, args.gh_token)
 
 			# 4. Generate line graph
 			image_name: str = generate_line_graph(latest_rankings)
 
 			# 5. Update line graph to GitHub
 			uploaded_image_url = upload_line_graph(image_name, args.gh_token)
-	
+
 			# 6. Send line notification with graph
 			send_line_notification(
 				f'Rank {"up" if prev_rank > cur_rank else "down"} ({prev_rank} -> {cur_rank})',
