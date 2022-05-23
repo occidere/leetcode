@@ -71,20 +71,33 @@ def generate_line_graph(rankings: List[Ranking]) -> str:
 	last_10_rankings: List[Ranking] = sorted(rankings, key=lambda r: r.epoch_ms)[-10:]
 	for r in last_10_rankings:
 		log(f'{r}')
+
 	xs = list(map(lambda r: _epoch_ms_to_date_str(r.epoch_ms, '%m/%d'), last_10_rankings))
 	ys = list(map(lambda r: r.ranking, last_10_rankings))
 
 	from matplotlib import pyplot as plt
-	from matplotlib.pyplot import figure
+	from matplotlib.offsetbox import AnchoredText
 
-	figure(figsize=(9, 5))
+	color_val = 'orange'
+	plt.figure(figsize=(9, 5), edgecolor=color_val, facecolor=color_val)
+	plt.plot(xs, ys, '.-', color=color_val)
 	plt.gca().invert_yaxis()
-	plt.plot(xs, ys, '.-')
-	plt.title('LeetCode Ranking')
-	plt.xlabel('Date')
-	plt.ylabel('Ranking')
+	plt.title('LeetCode Ranking', color=color_val)
+	plt.xlabel('Date', color=color_val)
+	plt.ylabel('Ranking', color=color_val)
+	plt.tick_params(color=color_val, labelcolor=color_val, grid_color=color_val)
+
 	for i in range(len(xs)):
-		plt.text(xs[i], ys[i] + 0.3, ys[i], ha='center', va='bottom', size=10)
+		plt.text(xs[i], ys[i] + 0.3, ys[i], ha='center', va='bottom', size=10, color=color_val)
+
+	text_box = AnchoredText(
+		s=f'Updated at {_epoch_ms_to_date_str(_get_epoch_ms())} (KST)',
+		frameon=False,
+		loc='lower right',
+		prop={'color': color_val}
+	)
+	plt.setp(text_box.patch, facecolor='none', alpha=0.5)
+	plt.gca().add_artist(text_box)
 
 	name = 'ranking_graph.png'
 	plt.savefig(name, transparent=True)
@@ -170,14 +183,14 @@ if __name__ == '__main__':
 
 			# 3. Update rankings csv to GitHub
 			latest_rankings: List[Ranking] = rankings_from_github + [ranking_from_leetcode]
-			upload_rankings_csv(latest_rankings, args.gh_token)
+			# upload_rankings_csv(latest_rankings, args.gh_token)
 
 			# 4. Generate line graph
 			image_name: str = generate_line_graph(latest_rankings)
 
 			# 5. Update line graph to GitHub
 			uploaded_image_url = upload_line_graph(image_name, args.gh_token)
-
+	
 			# 6. Send line notification with graph
 			send_line_notification(
 				f'Rank {"up" if prev_rank > cur_rank else "down"} ({prev_rank} -> {cur_rank})',
