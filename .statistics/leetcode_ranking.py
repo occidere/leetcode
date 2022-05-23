@@ -1,6 +1,6 @@
 import argparse
 import base64
-from datetime import datetime
+from datetime import datetime, timedelta
 from pytz import timezone
 from typing import *
 
@@ -92,7 +92,7 @@ def generate_line_graph(rankings: List[Ranking]) -> str:
 		plt.text(xs[i], ys[i] + 0.3, ys[i], ha='center', va='bottom', size=10, color=color_val)
 
 	text_box = AnchoredText(
-		s=f'Updated at {datetime.now(tz=timezone("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S")} (KST)',
+		s=f'Updated at {_get_kst_now()} (KST)',
 		frameon=False,
 		loc='lower right',
 		prop={'color': color_val}
@@ -153,7 +153,7 @@ def send_line_notification(msg: str, graph_url: str, line_bot_id: str, line_chan
 
 
 def log(msg: str) -> None:
-	print('[{}] {}'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), msg))
+	print(f'[{_get_kst_now()}] {msg}')
 
 
 def _get_epoch_ms(dt: datetime = datetime.now()) -> int:
@@ -162,6 +162,10 @@ def _get_epoch_ms(dt: datetime = datetime.now()) -> int:
 
 def _epoch_ms_to_date_str(epoch_ms: int, fmt: str = '%Y-%m-%d %H:%M:%S') -> str:
 	return datetime.fromtimestamp(epoch_ms / 1000).strftime(fmt)
+
+
+def _get_kst_now() -> str:
+	return (datetime.utcnow() + timedelta(hours=9)).strftime("%Y-%m-%d %H:%M:%S")
 
 
 if __name__ == '__main__':
