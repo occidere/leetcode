@@ -91,7 +91,7 @@ def generate_line_graph(rankings: List[Ranking]) -> str:
 		plt.text(xs[i], ys[i] + 0.3, ys[i], ha='center', va='bottom', size=10, color=color_val)
 
 	text_box = AnchoredText(
-		s=f'Updated at {_epoch_ms_to_date_str(_get_epoch_ms())} (KST)',
+		s=f'Updated at {datetime.now(tz=timezone("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S")} (KST)',
 		frameon=False,
 		loc='lower right',
 		prop={'color': color_val}
