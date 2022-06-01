@@ -39,7 +39,7 @@ class LeetCodeRankingJob(Job):
 		info(f'prev ranking: {prev_rank}, cur ranking: {cur_rank}')
 
 		# 2. If ranking changed,
-		if prev_rank == cur_rank:  # FIXME
+		if prev_rank != cur_rank:
 			info('Rank changed!')
 
 			# 3. Update rankings csv to GitHub
