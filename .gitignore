@@ -2,3 +2,4 @@
 .statistics/*.png
 **/*.iml
 analysis/output
+**/__pycach__
