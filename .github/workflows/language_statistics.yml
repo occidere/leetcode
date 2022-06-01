@@ -33,5 +33,4 @@ jobs:
       env:
         TOKEN: ${{ secrets.LANGUAGE_STATISTICS_TOKEN }}
       run: |
-        cd .statistics
-        python language_statistics.py --token "${TOKEN}"
+        python3 -m analysis --job LanguageStatisticsJob --github-api-token "${TOKEN}"
