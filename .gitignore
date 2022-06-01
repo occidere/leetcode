@@ -1,2 +1,4 @@
 **/.idea/**
 .statistics/*.png
+**/*.iml
+analysis/output
