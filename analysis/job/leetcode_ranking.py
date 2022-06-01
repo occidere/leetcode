@@ -29,6 +29,8 @@ class LeetCodeRankingJob(Job):
 		self.github_service = GitHubService(github_api_token)
 		self.leetcode_service = LeetCodeService()
 		self.line_service = Line(line_bot_id, line_channel_access_token)
+		self.LEETCODE_RANKING_GRAPH_PATH = 'analysis/output/ranking_graph.png'
+		self.LEETCODE_RANKING_CSV_PATH = 'analysis/output/leetcode_rankings.csv'
 
 	def run(self) -> None:
 		# 1. Get rankings from GitHub, LeetCode
@@ -47,10 +49,10 @@ class LeetCodeRankingJob(Job):
 			self.upload_rankings_csv(latest_rankings)
 
 			# 4. Generate line graph
-			image_name: str = self.generate_line_graph(latest_rankings)
+			image_path: str = self.generate_line_graph(latest_rankings)
 
 			# 5. Update line graph to GitHub
-			uploaded_image_url = self.upload_line_graph(image_name)
+			uploaded_image_url = self.upload_line_graph(image_path)
 
 			# # 6. Send line notification with graph
 			self.send_line_notification(
@@ -65,7 +67,7 @@ class LeetCodeRankingJob(Job):
 		content: bytes = self.github_service.get_raw_content(
 			owner='occidere',
 			repo='leetcode',
-			file_path='/analysis/output/leetcode_rankings.csv',
+			file_path=self.LEETCODE_RANKING_CSV_PATH,
 			branch='master'
 		)
 		return [
@@ -87,8 +89,7 @@ class LeetCodeRankingJob(Job):
 			).decode('ascii')
 		)
 
-	@staticmethod
-	def generate_line_graph(rankings: List[Ranking]) -> str:
+	def generate_line_graph(self, rankings: List[Ranking]) -> str:
 		last_10_rankings: List[Ranking] = sorted(rankings, key=lambda r: r.epoch_ms)[-10:]
 		for r in last_10_rankings:
 			info(f'{r}')
@@ -120,28 +121,15 @@ class LeetCodeRankingJob(Job):
 		plt.setp(text_box.patch, facecolor='none', alpha=0.5)
 		plt.gca().add_artist(text_box)
 
-		name = 'output/ranking_graph.png'
-		plt.savefig(name, transparent=True)
-		return name
+		plt.savefig(self.LEETCODE_RANKING_GRAPH_PATH, transparent=True)
+		return self.LEETCODE_RANKING_GRAPH_PATH
 
-	def upload_line_graph(self, filename: str) -> str:
-		# image_url = f'{GITHUB_API_BASE_PATH}/{filename}'
-		# auth_headers = {'Authorization': f'bearer {gh_token}'}
-		# sha = requests.get(url=image_url, headers=auth_headers).json().get('sha', '')
-		# resp: requests.Response = requests.put(
-		# 	url=image_url,
-		# 	headers=auth_headers,
-		# 	json={
-		# 		"message": "Update Ranking line graph",
-		# 		"content": encodingutils.encode_binary_to_base64(filename).decode('ascii'),
-		# 		"sha": sha
-		# 	}
-		# )
+	def upload_line_graph(self, file_path: str) -> str:
 		uploaded_url = self.github_service.upload_file(
 			owner='occidere',
 			repo='leetcode',
-			file_path=f'analysis/{filename}',
-			base64content=encodingutils.encode_binary_to_base64(filename).decode('ascii')
+			file_path=file_path,
+			base64content=encodingutils.encode_binary_to_base64(file_path).decode('ascii')
 		)
 		info(f'Uploaded ranking graph to {uploaded_url}')
 		return uploaded_url
