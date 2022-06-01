@@ -1,4 +1,3 @@
-import os
 from os import walk, path
 from typing import *
 
@@ -21,7 +20,7 @@ class Language:
 class LanguageStatisticsJob(Job):
 
 	def __init__(self, github_api_token: str) -> None:
-		self.LANGUAGE_IMAGE_PATH = 'output/language_statistics.png'
+		self.LANGUAGE_IMAGE_PATH = 'analysis/output/language_statistics.png'
 		self.github_service = GitHubService(github_api_token)
 
 	def run(self) -> None:
@@ -39,7 +38,7 @@ class LanguageStatisticsJob(Job):
 		uploaded_url = self.github_service.upload_file(
 			owner='occidere',
 			repo='leetcode',
-			file_path=f'analysis/{chart_filename}',
+			file_path=f'{chart_filename}',
 			base64content=encodingutils.encode_binary_to_base64(chart_filename).decode('ascii')
 		)
 		info(f'Chart image uploaded as {uploaded_url}')
@@ -63,7 +62,7 @@ class LanguageStatisticsJob(Job):
 
 	@staticmethod
 	def __aggr_language_count(lang_by_ext: Dict[str, Language]) -> List[Language]:
-		root_dir = path.abspath('..')
+		root_dir = path.abspath('.')
 		for (root, dirs, files) in walk(root_dir):
 			if path.relpath(root, root_dir)[0] != '.':
 				for ext in [path.splitext(f)[1] for f in files]:

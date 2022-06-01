@@ -1,8 +1,8 @@
 import argparse
 
-from logger.logger import error
-from job.language_statistics import LanguageStatisticsJob
-from job.leetcode_ranking import LeetCodeRankingJob
+from analysis.logger.logger import error
+from analysis.job.language_statistics import LanguageStatisticsJob
+from analysis.job.leetcode_ranking import LeetCodeRankingJob
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
