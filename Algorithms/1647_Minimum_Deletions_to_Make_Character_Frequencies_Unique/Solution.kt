@@ -7,13 +7,12 @@ class Solution {
             val uniq = mutableSetOf(freq.first())
             freq.drop(1)
                 .map {
-                    var (cost, cur) = 0 to it
+                    var cur = it
                     while (cur > 0 && uniq.contains(cur)) {
                         --cur
-                        ++cost
                     }
                     uniq += cur
-                    cost
+                    it - cur
                 }.sum()
         }
 }
