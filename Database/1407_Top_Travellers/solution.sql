@@ -9,7 +9,7 @@ SELECT
     ) travelled_distance
 FROM users a
     LEFT JOIN rides b ON a.id = b.user_id
-GROUP BY a.name
+GROUP BY a.id, a.name
 ORDER BY
     travelled_distance DESC,
     a.name ASC
