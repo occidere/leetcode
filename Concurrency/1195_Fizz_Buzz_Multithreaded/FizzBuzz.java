@@ -18,64 +18,41 @@ public class FizzBuzz {
 
     // printFizz.run() outputs "fizz".
     public void fizz(Runnable printFizz) throws InterruptedException {
-        synchronized (this) {
-            while (ai.get() <= n) {
-                if ("fizz".equals(getResponsibleThreadName())) {
-                    printFizz.run();
-                    ai.getAndIncrement();
-                    notifyAll();
-                } else {
-                    wait();
-                }
-            }
-        }
+        run(printFizz, "fizz");
     }
 
     // printBuzz.run() outputs "buzz".
     public void buzz(Runnable printBuzz) throws InterruptedException {
-        synchronized (this) {
-            while (ai.get() <= n) {
-                if ("buzz".equals(getResponsibleThreadName())) {
-                    printBuzz.run();
-                    ai.getAndIncrement();
-                    notifyAll();
-                } else {
-                    wait();
-                }
-            }
-        }
+        run(printBuzz, "buzz");
     }
 
     // printFizzBuzz.run() outputs "fizzbuzz".
     public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
-        synchronized (this) {
-            while (ai.get() <= n) {
-                if ("fizzbuzz".equals(getResponsibleThreadName())) {
-                    printFizzBuzz.run();
-                    ai.getAndIncrement();
-                    notifyAll();
-                } else {
-                    wait();
-                }
-            }
-        }
+        run(printFizzBuzz, "fizzbuzz");
     }
 
     // printNumber.accept(x) outputs "x", where x is an integer.
     public void number(IntConsumer printNumber) throws InterruptedException {
-        synchronized (this) {
-            while (ai.get() <= n) {
-                if ("number".equals(getResponsibleThreadName())) {
-                    printNumber.accept(ai.getAndIncrement());
-                    notifyAll();
-                } else {
-                    wait();
+        run(printNumber, "number");
+    }
+
+    private synchronized void run(Object obj, String type) throws InterruptedException {
+        while (ai.get() <= n) {
+            if (type.equals(getResponsibleThreadName())) {
+                if (obj instanceof Runnable) {
+                    ((Runnable) obj).run();
+                    ai.getAndIncrement();
+                } else if (obj instanceof IntConsumer) {
+                    ((IntConsumer) obj).accept(ai.getAndIncrement());
                 }
+                notifyAll();
+            } else {
+                wait();
             }
         }
     }
 
-    private synchronized String getResponsibleThreadName() {
+    private String getResponsibleThreadName() {
         final boolean forFizz = ai.get() % 3 == 0, forBuzz = ai.get() % 5 == 0;
         if (forFizz && forBuzz) {
             return "fizzbuzz";
