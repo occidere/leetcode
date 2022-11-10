@@ -4,7 +4,7 @@
 
 char* removeDuplicates(char* S){
     int k = 0, n = strlen(S);
-    char* stk = malloc(20001);
+    char* stk = malloc(200001);
 
     for (int i = 0; i < n; i++) {
         if (k > 0 && S[i] == stk[k - 1]) {
@@ -14,6 +14,6 @@ char* removeDuplicates(char* S){
         }
     }
     stk[k] = NULL;
-
+    
     return stk;
 }
