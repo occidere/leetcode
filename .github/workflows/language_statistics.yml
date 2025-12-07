@@ -31,6 +31,6 @@ jobs:
 
     - name: Create language analysis image
       env:
-        TOKEN: ${{ secrets.LANGUAGE_STATISTICS_TOKEN }}
+        TOKEN: ${{ secrets.LEETCODE_RANKING_TOKEN }}
       run: |
         python3 -m analysis --job LanguageStatisticsJob --github-api-token "${TOKEN}"
